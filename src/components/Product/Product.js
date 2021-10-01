@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import "./Product.css"
+import { useStateValue } from '../StateProvider/StateProvider'
 
 function Product({
     id,
@@ -20,6 +21,21 @@ function Product({
         theme: PropTypes.object.isRequired
     };
 
+    const [state, dispatch] = useStateValue();
+
+    const addToBasket = () => {
+        dispatch({
+            type: 'ADD_TO_BASKET',
+            item: {
+                id,
+                title,
+                image,
+                price,
+                rating
+            }
+        })
+    };
+
     return (
         <div className="product">
             <div className="product__info">
@@ -35,7 +51,7 @@ function Product({
                 </div>
             </div>
             <img src={image} alt={title} />
-            <button>Add to Basket</button>
+            <button onClick={addToBasket}>Add to Basket</button>
         </div>
     )
 }
